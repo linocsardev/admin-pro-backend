@@ -7,16 +7,17 @@ const app = express()
 //configurar cors
 app.use(cors())
 
+//Lectura y parseo del body
+app.use(express.json())
+
 //base de datos
 dbConextion()
 
 //rutas
-app.get('/', (req, res)=> {
-    res.json({
-        ok: true,
-        message: 'Bienvenidos a mi app'
-    })
-})
+app.use('/api/usuarios', require('./routes/usuarios'))
+app.use('/api/login', require('./routes/auth'))
+
+
 
 app.listen(process.env.PORT, ()=>{
     console.log(`Server running to port ${process.env.PORT}`)
